@@ -1,0 +1,86 @@
+//page 1
+
+DROP TABLE Book;
+
+CREATE TABLE Book(
+ISBN			string,
+Title			string, 
+Authors			string, 
+Price			integer, 
+InventoryQuantity	integer,
+PRIMARY KEY (ISBN)
+);
+
+CREATE TABLE Customer(
+UID	string, 
+Name	string, 
+Address	string,
+PRIMARY KEY (UID)
+);
+
+CREATE TABLE Order(
+OID		string, 
+UID		string, 
+OrderDate	Date, 
+OrderISBN	string, 
+OrderQuantity	integer, 
+ShippingStatus	string,
+PRIMARY KEY (OID, OrderISBN)
+);
+
+CREATE TABLE cart(
+OID		string, 
+OrderISBN	string,
+UID		string,
+PRIMARY KEY (OID, OrderISBN, UID),
+FOREIGN KEY (OID) 	REFERENCES Order ,
+FOREIGN KEY (OrderISBN) REFERENCES Order ,
+FOREIGN KEY (UID) 	REFERENCES Customer 
+);
+
+CREATE TABLE package(
+OID		string, 
+OrderISBN	string,
+ISBN		string,
+PRIMARY KEY (OID, OrderISBN, ISBN),
+FOREIGN KEY (OID) 	REFERENCES Order ,
+FOREIGN KEY (OrderISBN) REFERENCES Order ,
+FOREIGN KEY (ISBN) 	REFERENCES Book 
+);
+
+
+// page 2
+
+// case 1
+SELECT 
+From Book
+WHERE ISBN = '?'
+
+SELECT 
+From Book
+WHERE Title = '?'
+
+SELECT 
+From Book
+WHERE Authors = '?'
+
+// case 2
+INSERT INTO Book VALUES (OID, UID, OrderDate, OrderISBN, OrderQuantity, ShippingStatus)
+
+// case 3
+SELECT 
+From Order
+WHERE OID = '?', OrderISBN = '?'
+
+
+// page 3
+
+// case 1
+UPDATE Order SET ShippingStatus = '?' WHERE OID = '?', OrderISBN = "?"
+
+// case 2
+SELECT 
+From Order
+WHERE ShippingStatus = '?'
+
+// case 3 (?)
